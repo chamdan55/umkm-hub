@@ -45,98 +45,44 @@ def tab_content_header() -> rx.Component:
     )
 
 
-@template(route="/", title="Overview", on_load=StatsState.randomize_data)
+@template(route="/", title="Overview")
 def index() -> rx.Component:
     """The overview page.
 
     Returns:
-        The UI for the overview page.
+        The overview page component.
 
     """
     return rx.vstack(
-        rx.heading(f"Welcome, {ProfileState.profile.name}", size="5"),
         rx.flex(
-            rx.input(
-                rx.input.slot(rx.icon("search"), padding_left="0"),
-                placeholder="Search here...",
-                size="3",
-                width="100%",
-                max_width="450px",
-                radius="large",
-                style=styles.ghost_input_style,
-            ),
-            rx.flex(
-                notification("bell", "cyan", 12),
-                notification("message-square-text", "plum", 6),
-                spacing="4",
-                width="100%",
-                wrap="nowrap",
-                justify="end",
-            ),
-            justify="between",
-            align="center",
+            stats_cards(),
+            spacing="3",
+            flex_direction=["column", "column", "row"],
             width="100%",
         ),
-        stats_cards(),
-        card(
-            rx.hstack(
-                tab_content_header(),
-                rx.segmented_control.root(
-                    rx.segmented_control.item("Users", value="users"),
-                    rx.segmented_control.item("Revenue", value="revenue"),
-                    rx.segmented_control.item("Orders", value="orders"),
-                    margin_bottom="1.5em",
-                    default_value="users",
-                    on_change=StatsState.set_selected_tab,
-                ),
-                width="100%",
-                justify="between",
-            ),
-            rx.match(
-                StatsState.selected_tab,
-                ("users", users_chart()),
-                ("revenue", revenue_chart()),
-                ("orders", orders_chart()),
-            ),
-        ),
-        rx.grid(
+        rx.flex(
             card(
-                rx.hstack(
-                    rx.hstack(
-                        rx.icon("user-round-search", size=20),
-                        rx.text("Visitors Analytics", size="4", weight="medium"),
-                        align="center",
-                        spacing="2",
-                    ),
-                    timeframe_select(),
-                    align="center",
-                    width="100%",
-                    justify="between",
-                ),
-                pie_chart(),
-            ),
-            card(
-                rx.hstack(
-                    rx.icon("globe", size=20),
-                    rx.text("Acquisition Overview", size="4", weight="medium"),
-                    align="center",
-                    spacing="2",
-                    margin_bottom="2.5em",
-                ),
                 rx.vstack(
-                    acquisition(),
+                    tab_content_header(),
+                    revenue_chart(),
+                    spacing="4",
                 ),
+                padding="0px",
             ),
-            gap="1rem",
-            grid_template_columns=[
-                "1fr",
-                "repeat(1, 1fr)",
-                "repeat(2, 1fr)",
-                "repeat(2, 1fr)",
-                "repeat(2, 1fr)",
-            ],
+            card(pie_chart()),
+            spacing="3",
+            flex_direction=["column", "column", "column", "row"],
             width="100%",
         ),
+        rx.flex(
+            card(users_chart()),
+            card(orders_chart()),
+            spacing="3",
+            flex_direction=["column", "column", "column", "row"],
+            width="100%",
+        ),
+        acquisition(),
+        notification(icon="bell", color="blue", count=2),
         spacing="8",
         width="100%",
     )

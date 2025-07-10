@@ -8,7 +8,6 @@ import reflex as rx
 
 from .. import styles
 from ..components.navbar import navbar
-from ..components.sidebar import sidebar
 
 # Meta tags for the app.
 default_meta = [
@@ -88,15 +87,18 @@ def template(
         def templated_page():
             return rx.flex(
                 navbar(),
-                sidebar(),
                 rx.flex(
                     rx.vstack(
                         page_content(),
                         width="100%",
-                        **styles.template_content_style,
+                        padding="1.5em",
+                        margin_bottom="1em",
+                        min_height="90vh",
                     ),
                     width="100%",
-                    **styles.template_page_style,
+                    padding_top=["0.5em", "0.5em", "1em"],
+                    padding_x=["1em", "1em", "2em"],
+                    margin="0 auto",
                     max_width=[
                         "100%",
                         "100%",
@@ -106,16 +108,8 @@ def template(
                         styles.max_width,
                     ],
                 ),
-                flex_direction=[
-                    "column",
-                    "column",
-                    "column",
-                    "column",
-                    "column",
-                    "row",
-                ],
+                flex_direction="column",
                 width="100%",
-                margin="auto",
                 position="relative",
             )
 
