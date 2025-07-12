@@ -180,6 +180,7 @@ def daily_revenue_chart() -> rx.Component:
         padding="24px",
         border="1px solid var(--gray-6)",
         box_shadow="0 4px 20px rgba(0,0,0,0.08)",
+        width="100%",
     )
 
 
@@ -331,7 +332,7 @@ def top_products_table() -> rx.Component:
 
 
 def quick_insights() -> rx.Component:
-    """Create the quick insights section with enhanced styling."""
+    """Create the quick insights section with enhanced styling - full width horizontal layout."""
     return rx.box(
         rx.vstack(
             rx.hstack(
@@ -340,7 +341,7 @@ def quick_insights() -> rx.Component:
                 align="center",
                 spacing="2",
             ),
-            rx.vstack(
+            rx.hstack(
                 rx.box(
                     rx.hstack(
                         rx.box(
@@ -366,12 +367,12 @@ def quick_insights() -> rx.Component:
                         ),
                         align="center",
                         spacing="3",
-                        width="100%",
                     ),
                     background="rgba(16, 185, 129, 0.05)",
                     border_radius="12px",
                     padding="16px",
                     border="1px solid rgba(16, 185, 129, 0.1)",
+                    flex="1",
                 ),
                 rx.box(
                     rx.hstack(
@@ -398,15 +399,15 @@ def quick_insights() -> rx.Component:
                         ),
                         align="center",
                         spacing="3",
-                        width="100%",
                     ),
                     background="rgba(59, 130, 246, 0.05)",
                     border_radius="12px",
                     padding="16px",
                     border="1px solid rgba(59, 130, 246, 0.1)",
+                    flex="1",
                 ),
-                spacing="4",
-                align="start",
+                spacing="6",
+                align="stretch",
                 width="100%",
             ),
             spacing="4",
@@ -418,6 +419,7 @@ def quick_insights() -> rx.Component:
         padding="24px",
         border="1px solid var(--gray-6)",
         box_shadow="0 4px 20px rgba(0,0,0,0.08)",
+        width="100%",
     )
 
 
@@ -503,19 +505,17 @@ def sales_dashboard_content() -> rx.Component:
                 width="100%",
             ),
             
-            # Charts Section
-            rx.grid(
-                daily_revenue_chart(),
-                product_sales_chart(),
-                columns="2",
-                spacing="6",
-                width="100%",
-            ),
+            # Quick Insights - Full Width
+            quick_insights(),
             
-            # Bottom Section
+            # Charts Section
+            # Daily Revenue Chart - Full Width
+            daily_revenue_chart(),
+            
+            # Bottom Section - Pie Chart and Top Products Table side by side
             rx.grid(
+                product_sales_chart(),
                 top_products_table(),
-                quick_insights(),
                 columns="2",
                 spacing="6",
                 width="100%",
