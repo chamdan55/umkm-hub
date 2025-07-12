@@ -180,7 +180,7 @@ class SalesDashboardState(rx.State):
             for date_str, revenue in sorted(daily_revenue.items())
         ]
         
-        # Product sales data with colors
+        # Product sales data with enhanced colors
         product_sales = {}
         for sale in filtered_data:
             product_name = sale.nama_produk
@@ -189,7 +189,21 @@ class SalesDashboardState(rx.State):
             product_sales[product_name]["revenue"] += sale.total
             product_sales[product_name]["quantity"] += sale.kuantitas
         
-        colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#00ff00", "#0088fe", "#ff8042", "#ffbb28", "#8dd1e1", "#d084d0"]
+        # Enhanced color palette with better contrast and modern colors
+        colors = [
+            "#3b82f6",  # Blue
+            "#10b981",  # Emerald
+            "#f59e0b",  # Amber
+            "#ef4444",  # Red
+            "#8b5cf6",  # Violet
+            "#06b6d4",  # Cyan
+            "#f97316",  # Orange
+            "#84cc16",  # Lime
+            "#ec4899",  # Pink
+            "#6366f1",  # Indigo
+            "#14b8a6",  # Teal
+            "#f43f5e",  # Rose
+        ]
         self.product_sales_data = [
             {
                 "product": product, 
@@ -231,13 +245,14 @@ class SalesDashboardState(rx.State):
         return colors[:len(self.product_sales_data)]
 
     @rx.var
-    def formatted_top_products(self) -> List[Dict[str, str]]:
-        """Get formatted top products data for the table."""
+    def formatted_top_products_with_rank(self) -> List[Dict[str, str]]:
+        """Get formatted top products data with rank for the table."""
         return [
             {
+                "rank": str(i + 1),
                 "product": item["product"],
                 "revenue": f"Rp {item['revenue']:,.0f}",
                 "quantity": f"{item['quantity']:,}"
             }
-            for item in self.top_products_data
+            for i, item in enumerate(self.top_products_data)
         ]
